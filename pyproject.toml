@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "opencv-log"
+version = "0.1.0"
+description = "Logger library for debugging and testing image processing script"
+authors = ["Navarasu <navarasu@outlook.com>"]
+readme = 'README.md'
+license = "MIT"
+
+keywords = ['opencv','log','logger', 'debug', 'test','visual log']
+classifiers = [
+    "Operating System :: OS Independent",
+]
+packages = [ { include = "cvlog" }]
+    
+[tool.poetry.dependencies]
+python = "^3.4"
+opencv-python = "^3.4"
+
+[tool.poetry.dev-dependencies]
+pytest = "^3.0"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
