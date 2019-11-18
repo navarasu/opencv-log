@@ -1,7 +1,6 @@
 version: 2
 
 jobs:
-
   build-and-test:
     docker:
       - image: circleci/python:3.6.8
@@ -40,14 +39,13 @@ jobs:
   
     docker:
         - image: circleci/python:3.6.8
-      steps:
+    steps:
+      - checkout
 
-        - checkout
-
-        - run:
-            name: Push to PyPI
-            command: |
-              poetry publish --build --username "${PYPI_USERNAME}" --password "${PYPI_PASSWORD}" --no-interaction
+      - run:
+          name: Push to PyPI
+          command: |
+            poetry publish --build --username "${PYPI_USERNAME}" --password "${PYPI_PASSWORD}" --no-interaction
 
 workflows:
   version: 2
