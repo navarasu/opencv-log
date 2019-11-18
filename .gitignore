@@ -3,3 +3,6 @@ dist/
 poetry.lock
 .DS_Store
 .vscode
+.coverage
+.env
+log/
