@@ -34,7 +34,6 @@ def show_image(level, img):
     cv2.setWindowTitle('window', level.name)
     cv2.imshow('window', img)
     value = cv2.waitKey(0)
-    print(value)
     if value == 27:
         os._exit(1)
     return value
@@ -42,8 +41,8 @@ def show_image(level, img):
 def __init():
     global current_mode,html_logger,current_level
     if current_mode == None:
-        current_mode=Mode[os.environ.get('DEBUG_MODE',"NONE")]
-        current_level=Level[os.environ.get('LEVEL_MODE',"ERROR")]
+        current_mode=Mode[os.environ.get('CVLOG_MODE',"NONE")]
+        current_level=Level[os.environ.get('CVLOG_LEVEL',"ERROR")]
         if current_mode==Mode.LOG:
             html_logger=hl.HtmlLogger(report_path+"/log.html")
     return  current_mode

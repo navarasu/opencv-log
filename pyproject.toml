@@ -5,6 +5,7 @@ description = "OpenCV based visual logger for debugging,logging and testing imag
 authors = ["Navarasu <navarasu@outlook.com>"]
 readme = 'README.md'
 license = "MIT"
+repository = "https://github.com/navarasu/opencv-log"
 
 keywords = ['opencv','log','logger', 'debug', 'test','visual log']
 classifiers = [
