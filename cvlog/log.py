@@ -2,36 +2,33 @@ import cv2
 import os
 import cvlog.html_logger as hl
 import base64
-from enum import Enum
-Mode = Enum('Mode','DEBUG LOG NONE')
-report_path="log"
-html_logger,current_mode,current_level = None, None, None
-
-class Level(Enum):
-    TRACE = 1
-    INFO = 2
-    ERROR = 3
+from cvlog.config import Config,Mode,Level
+html_logger= None
 
 def image(level,image):
-    #TODO log if null or invaild image data in log
-    __init()
-    if current_level.value > level.value:
+    if image is None:
         return
-    if current_mode== Mode.DEBUG:
-        show_image(level,image)
-    elif current_mode == Mode.LOG:
-        log_image(level,image)
+    try:
+        __init()
+        if Config().curent_level().value < level.value:
+            return
+        if Config().curent_mode() == Mode.DEBUG:
+            show_image(level.name,image)
+        elif Config().curent_mode() == Mode.LOG:
+            log_image(level.name,image)
+    except Exception as e:
+        print(e)
 
 def log_image(level,img):
     retval, buffer = cv2.imencode('.png', img)
     if not retval:
         return None
     html_logger.log_image(level,base64.b64encode(buffer).decode())
-    
 
-def show_image(level, img):
+
+def show_image(title, img):
     cv2.namedWindow('window', cv2.WINDOW_NORMAL)
-    cv2.setWindowTitle('window', level.name)
+    cv2.setWindowTitle('window', title)
     cv2.imshow('window', img)
     value = cv2.waitKey(0)
     if value == 27:
@@ -39,10 +36,6 @@ def show_image(level, img):
     return value
 
 def __init():
-    global current_mode,html_logger,current_level
-    if current_mode == None:
-        current_mode=Mode[os.environ.get('CVLOG_MODE',"NONE")]
-        current_level=Level[os.environ.get('CVLOG_LEVEL',"ERROR")]
-        if current_mode==Mode.LOG:
-            html_logger=hl.HtmlLogger(report_path+"/log.html")
-    return  current_mode
+    global html_logger
+    if Config().curent_mode()==Mode.LOG and html_logger is None:
+        html_logger=hl.HtmlLogger(Config().log_path()+"/log.html")

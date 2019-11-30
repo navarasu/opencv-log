@@ -5,7 +5,7 @@ import datetime
 import json
 from inspect import stack
 from datetime import datetime,timezone
-
+from uuid import uuid4
 class HtmlLogger:
     def __init__(self, file_path):
         self.__file_path = file_path
@@ -18,12 +18,13 @@ class HtmlLogger:
         self.__append_log_item(level,data)
 
     def __append_log_item(self,level,log_detail):
-        template='<div class="log-item" id="id1" onclick="show_data(this.id)"'
+        template='<div class="log-item" id="'
+        template+=self.__unique_id()+'" onclick="show_data(this.id)"'
         short_stack,data=self.__get_log_info()
-        data['level']=level.name
+        data['level']=level
         template+="data='"+json.dumps(data)+"' logdata = '"+log_detail+"'>"
         template+='<h3 class="time">'+data['time_stamp']
-        template+='<span class="level '+level.name.lower()+'">'+data['level']+'</span></h3>'
+        template+='<span class="level '+level.lower()+'">'+data['level']+'</span></h3>'
         template+='<p class="time">'+short_stack+'</p></div>'
         self.__append([template])
     
@@ -46,8 +47,7 @@ class HtmlLogger:
             html.writelines(['<html>',ht.STYLE,ht.SCRIPT,ht.CONTENT_START,ht.NO_DATA_CONTENT,ht.CONTENT_END])
     
     def __get_log_info(self):
-        short_stack,long_stack= self.__stack_trace(5)
-        print(long_stack)
+        short_stack,long_stack= self.__stack_trace(6)
         return short_stack, {'time_stamp': datetime.utcnow().replace(tzinfo=timezone.utc).isoformat(' '),
                 'long_stack':long_stack}
     
@@ -57,3 +57,6 @@ class HtmlLogger:
         for x in stacks[:10]:
             stack_trace+=x.filename+":"+str(x.lineno)+"\n"
         return stacks[0].filename+":"+str(stacks[0].lineno),stack_trace
+    
+    def __unique_id(self):
+        return str(uuid4())
