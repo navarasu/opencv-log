@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "opencv-log"
-version = "0.1.0"
+version = "1.0.0"
 description = "OpenCV based visual logger for debugging,logging and testing image processing code"
 authors = ["Navarasu <navarasu@outlook.com>"]
 readme = 'README.md'
