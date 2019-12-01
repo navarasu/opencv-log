@@ -31,7 +31,7 @@ jobs:
       - run:
           name: Run Pytest, report coverage
           command: |
-            poetry run coverage run --omit="/home/circleci/.cache/pypoetry/virtualenvs" -m pytest
+            poetry run coverage run --source=cvtest,cvlog -m pytest
             poetry run coveralls
 
 
