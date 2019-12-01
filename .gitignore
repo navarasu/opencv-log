@@ -6,3 +6,4 @@ poetry.lock
 .coverage
 .env
 log/
+html_template.html

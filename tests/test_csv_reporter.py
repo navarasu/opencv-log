@@ -1,11 +1,11 @@
 from cvtest.csv_reporter import CsvReporter
-from .utils import read_file
+from .utils import read_file,remove_dirs
 from shutil import rmtree
 
 csv_path='log/csv/'
 
 def test_init_csv_reporter():
-    rmtree(csv_path)
+    remove_dirs(csv_path)
     reporter=CsvReporter(csv_path+'test.csv')
     assert read_file(csv_path+'test.csv') == 'Test Image,Result,Message\n'
 
