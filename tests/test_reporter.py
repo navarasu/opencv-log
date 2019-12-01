@@ -1,7 +1,7 @@
 import cvtest as test
 import cv2
 from unittest.mock import patch
-from .utils import read_file,remove_dirs
+from .utils import read_file,remove_dirs,ROOT_DIR
 
 @patch('cvlog.log.show_image')
 def test_report_pass(show_image):
@@ -24,7 +24,7 @@ def test_report_error():
     assert result.startswith('Test Image,Result,Message\n'+
             'tests/data/orange.png,PASS,\n'+
             'tests/data/orange.png,FAIL,log/report/images/')
-    assert result.endswith('error.png,ERROR,/Users/navarasu/Workspace/opencv-log/tests/test_reporter.py:31;\n')
+    assert result.endswith('error.png,ERROR,'+ROOT_DIR+'/tests/test_reporter.py:31;\n')
 
 def process_image(image_path):
     if image_path == "error.png":
