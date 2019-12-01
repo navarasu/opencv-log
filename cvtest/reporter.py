@@ -1,4 +1,4 @@
-from  cvlog.log import show_image
+from  cvlog import log
 from cvtest.csv_reporter import CsvReporter
 from cvlog.config import Config
 import traceback
@@ -51,8 +51,8 @@ def report(input_image_path,processing_method):
     for image_path in input_image_path:
         try:
             img=processing_method(image_path)
-            key_pressed=show_image(image_path,img)
+            key_pressed=log.show_image(image_path,img)
         except Exception as e:
-            Reporter().error(input_image_path,e)
+            Reporter().error(image_path,e)
         else:
-            Reporter().result(input_image_path,key_pressed,img)
+            Reporter().result(image_path,key_pressed,img)

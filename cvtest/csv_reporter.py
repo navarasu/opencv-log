@@ -5,7 +5,7 @@ import csv
 class CsvReporter:
     def __init__(self, file_path):
         self.__file_path = file_path
-        self.fields=["Test Image","Result","Message"]
+        self.__fields=["Test Image","Result","Message"]
         self.__create_file()
 
     def __create_file(self):
@@ -15,7 +15,7 @@ class CsvReporter:
         os.makedirs(dir_path)
         with open(self.__file_path, 'w') as f:
             writer = csv.writer(f)
-            writer.writerow(self.fields)
+            writer.writerow(self.__fields)
 
     def __append(self,values):
         with open(self.__file_path, 'a') as f:
