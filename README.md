@@ -41,6 +41,23 @@ log.image(log.Level.TRACE, img)
 
 ```
 
+### Log Houghlines
+
+```python
+
+import cvlog as log
+import numpy as np
+
+img = cv2.imread('dave.jpg')
+gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+edges = cv2.Canny(gray,50,150,apertureSize = 3)
+lines = cv2.HoughLines(edges,1,np.pi/180,200)
+
+# log or show the image by drawing the lines output
+log.hough_lines(log.Level.INFO,lines,img)
+
+```
+
 ### Test Report
 
 ```python
