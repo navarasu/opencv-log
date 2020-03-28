@@ -18,7 +18,7 @@ pip install opencv-log
 
 ```python
 import cvlog as log
-
+import cv2
 # Set default mode and level
 # If we dont set, then default mode is NONE
 # and the default level is ERROR
