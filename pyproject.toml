@@ -15,7 +15,7 @@ packages = [ { include = "cvlog" }]
     
 [tool.poetry.dependencies]
 python = "^3.5"
-opencv-python = "^3.5"
+opencv-python = "^3.4"
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
