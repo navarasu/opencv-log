@@ -47,14 +47,51 @@ jobs:
           command: |
             poetry publish --build --username "${PYPI_USERNAME}" --password "${PYPI_PASSWORD}" --no-interaction
 
+  docs-build:
+    docker:
+      - image: circleci/python:3.6.8
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            poetry install
+      - run:
+          name: Build docs
+          command: cd docs/ && poetry run make html
+      - persist_to_workspace:
+          root: docs/build
+          paths: html
+
+  docs-deploy:
+    docker:
+      - image: node:8.10.0
+    steps:
+      - checkout
+      - attach_workspace:
+          at: docs/build
+      - run:
+          name: Disable jekyll builds
+          command: touch docs/build/html/.nojekyll
+      - run:
+          name: Install and configure dependencies
+          command: |
+            npm install -g --silent gh-pages@2.0.1
+            git config user.email "ci-build@opencv.log"
+            git config user.name "ci-build"	
+      - add_ssh_keys:
+          fingerprints:
+            - "c1:7b:84:2c:38:10:1a:72:fe:c9:b9:d7:1f:72:1e:e3"
+      - run:
+          name: Deploy docs to gh-pages branch
+          command: gh-pages --dotfiles --message "[skip ci] Updates" --dist docs/build/html
+
 workflows:
   version: 2
-
 
   build-and-test-workflow:
     jobs:
       - build-and-test
-  
   deployment-workflow:
     jobs:
 
@@ -73,3 +110,21 @@ workflows:
                 only: /v[0-9]+(\.[0-9]+)*/
               branches:
                 ignore: /.*/
+
+      - docs-build:
+          requires:
+            - deployment
+          filters:
+              tags:
+                only: /v[0-9]+(\.[0-9]+)*/
+              branches:
+                ignore: /.*/   
+
+      - docs-deploy:
+          requires:
+            - docs-build
+          filters:
+              tags:
+                only: /v[0-9]+(\.[0-9]+)*/
+              branches:
+                ignore: /.*/ 
