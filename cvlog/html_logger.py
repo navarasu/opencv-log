@@ -10,8 +10,8 @@ class HtmlLogger:
     def __init__(self, file_path):
         self.__file_path = file_path
         self.__last_pos=-len(ht.CONTENT_END)
+        self.__clear_dir()
         self.__create_file()
-        self.__no_data=True
     
     def log_image(self,level,img_data):
         data=''.join(['<img src="data:image/png;base64, ',img_data,'"/>'])
@@ -29,6 +29,7 @@ class HtmlLogger:
         self.__append([template])
     
     def __append(self,html_text_seq):
+        self.__create_file()
         with open(self.__file_path, "rb+") as html:
             if(self.__no_data):
                 html.seek(-len(ht.NO_DATA_CONTENT)+self.__last_pos,2)
@@ -39,13 +40,20 @@ class HtmlLogger:
             html.truncate()
 
     def __create_file(self):
+        if os.path.exists(self.__file_path):
+            return
+        dir_path=os.path.dirname(self.__file_path)
+        if not os.path.exists(dir_path):
+            os.makedirs(dir_path)
+        with open(self.__file_path, 'w') as html:
+            html.writelines(['<html>',ht.STYLE,ht.SCRIPT,ht.CONTENT_START,ht.NO_DATA_CONTENT,ht.CONTENT_END])
+        self.__no_data=True
+
+    def __clear_dir(self):
         dir_path=os.path.dirname(self.__file_path)
         if os.path.exists(dir_path):
             rmtree(dir_path)
-        os.makedirs(dir_path)
-        with open(self.__file_path, 'w') as html:
-            html.writelines(['<html>',ht.STYLE,ht.SCRIPT,ht.CONTENT_START,ht.NO_DATA_CONTENT,ht.CONTENT_END])
-    
+
     def __get_log_info(self):
         short_stack,long_stack= self.__stack_trace(6)
         return short_stack, {'time_stamp': datetime.utcnow().replace(tzinfo=timezone.utc).isoformat(' '),
