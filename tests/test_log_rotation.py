@@ -8,8 +8,7 @@ def test_log_interruption():
     log.set_mode(log.Mode.LOG)
     img = cv2.imread("tests/data/orange.png")
     log.image(log.Level.ERROR, img)
-    assert os.path.exists('log/log.html') == True
+    assert os.path.exists('log/log.html') is True
     remove_dirs('log/')
     log.image(log.Level.ERROR, img)
-    assert os.path.exists('log/log.html') == True
-    
+    assert os.path.exists('log/log.html') is True
