@@ -23,9 +23,9 @@ jobs:
             - /home/circleci/.cache/pypoetry/virtualenvs
 
       - run:
-        name: Run flake8
-        command: |
-          poetry run flake8 .
+          name: Run flake8
+          command: |
+            poetry run flake8 .
 
       - run:
           name: Run Pytest, report coverage
