@@ -1,7 +1,7 @@
 import cvlog as log
 import cv2
-from bs4 import BeautifulSoup
-from .utils import read_file, remove_dirs
+import numpy as np
+from .utils import read_file, remove_dirs, get_html
 import os
 from unittest.mock import patch
 
@@ -34,7 +34,6 @@ def test_log_mode_info_level():
     log.set_level(log.Level.INFO)
     log_all_level(cv2.imread("tests/data/orange.png"))
     logitem = get_html('log/log.html').select('.log-list .log-item')
-    print(len(logitem))
     assert len(logitem) == 2
     level_info_tag = logitem[0].select('.level')[0]
     assert level_info_tag.get_text() == 'INFO'
@@ -78,10 +77,19 @@ def test_debug_mode_trace_level(show_image):
     log_all_level(cv2.imread("tests/data/orange.png"))
     assert os.path.exists('log/log.html') is False
 
+def test_log_hough_lines():
+    remove_dirs('log/')
+    img = cv2.imread('tests/data/sudoku.png')
+    log.set_mode(log.Mode.LOG)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    edges = cv2.Canny(gray, 50, 150, apertureSize=3)
+    lines = cv2.HoughLines(edges, 1, np.pi / 180, 200)
+
+    log.hough_lines(log.Level.ERROR, lines, img)
+    logitem = get_html('log/log.html').select('.log-list .log-item')
+    assert logitem[0]['logdata'] == read_file('tests/data/expected/houghline_img.txt')
+
 def log_all_level(img):
     log.image(log.Level.TRACE, img)
     log.image(log.Level.INFO, img)
     log.image(log.Level.ERROR, img)
-
-def get_html(file):
-    return BeautifulSoup(read_file(file), 'html.parser')

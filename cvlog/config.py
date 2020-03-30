@@ -30,8 +30,6 @@ class Config:
 
     def set_curent_mode(self, mode):
         self.__mode = self.__get_enum(mode, Mode)
-        print(self.__mode)
-        print(self.__mode)
 
     def set_curent_level(self, mode):
         self.__level = self.__get_enum(mode, Level)
