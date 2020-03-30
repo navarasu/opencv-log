@@ -9,19 +9,16 @@ html_logger = None
 def image(level, image):
     if image is None:
         return
-    try:
-        __init()
-        if Config().curent_level().value < level.value:
-            return
-        if Config().curent_mode() == Mode.DEBUG:
-            show_image(level.name, image)
-        elif Config().curent_mode() == Mode.LOG:
-            log_image(level.name, image)
-    except Exception as e:
-        print(e)
+    __init()
+    if Config().curent_level().value < level.value:
+        return
+    if Config().curent_mode() == Mode.DEBUG:
+        show_image(level.name, image)
+    elif Config().curent_mode() == Mode.LOG:
+        log_image(level.name, image)
 
-def hough_lines(level, image, lines):
-    debug_image = image.copy()
+def hough_lines(level, lines, cv_image):
+    debug_image = cv_image.copy()
     for line in lines:
         (x1, y1), (x2, y2) = find_line_pts(line)
         cv2.line(debug_image, (x1, y1), (x2, y2), (0, 0, 255), 2)

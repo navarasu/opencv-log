@@ -1,5 +1,6 @@
 import os
 from shutil import rmtree
+from bs4 import BeautifulSoup
 ROOT_DIR = os.path.abspath(os.curdir)
 
 def read_file(filepath):
@@ -10,3 +11,6 @@ def read_file(filepath):
 def remove_dirs(dir_path):
     if os.path.exists(dir_path):
         rmtree(dir_path)
+
+def get_html(file):
+    return BeautifulSoup(read_file(file), 'html.parser')
