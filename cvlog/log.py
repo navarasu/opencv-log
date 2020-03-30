@@ -3,10 +3,10 @@ import os
 import cvlog.html_logger as hl
 import base64
 import numpy as np
-from cvlog.config import Config,Mode,Level
-html_logger= None
+from cvlog.config import Config, Mode
+html_logger = None
 
-def image(level,image):
+def image(level, image):
     if image is None:
         return
     try:
@@ -14,18 +14,18 @@ def image(level,image):
         if Config().curent_level().value < level.value:
             return
         if Config().curent_mode() == Mode.DEBUG:
-            show_image(level.name,image)
+            show_image(level.name, image)
         elif Config().curent_mode() == Mode.LOG:
-            log_image(level.name,image)
+            log_image(level.name, image)
     except Exception as e:
         print(e)
 
-def hough_lines(level,image,lines):
+def hough_lines(level, image, lines):
     debug_image = image.copy()
     for line in lines:
         (x1, y1), (x2, y2) = find_line_pts(line)
         cv2.line(debug_image, (x1, y1), (x2, y2), (0, 0, 255), 2)
-    image(level,debug_image)
+    image(level, debug_image)
 
 def find_line_pts(line):
     r, theta = line[0]
@@ -39,11 +39,11 @@ def find_line_pts(line):
     y2 = int(y0 - 1000 * (a))
     return (x1, y1), (x2, y2)
 
-def log_image(level,img):
+def log_image(level, img):
     retval, buffer = cv2.imencode('.png', img)
     if not retval:
         return None
-    html_logger.log_image(level,base64.b64encode(buffer).decode())
+    html_logger.log_image(level, base64.b64encode(buffer).decode())
 
 
 def show_image(title, img):
@@ -57,5 +57,5 @@ def show_image(title, img):
 
 def __init():
     global html_logger
-    if Config().curent_mode()==Mode.LOG and html_logger is None:
-        html_logger=hl.HtmlLogger(Config().log_path()+"/log.html")
+    if Config().curent_mode() == Mode.LOG and html_logger is None:
+        html_logger = hl.HtmlLogger(Config().log_path() + "/log.html")

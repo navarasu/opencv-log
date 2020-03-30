@@ -10,4 +10,3 @@ def read_file(filepath):
 def remove_dirs(dir_path):
     if os.path.exists(dir_path):
         rmtree(dir_path)
-    

@@ -22,11 +22,10 @@ jobs:
           paths: 
             - /home/circleci/.cache/pypoetry/virtualenvs
 
-      #TODO: Enable liniting
-      #  - run:
-      #     name: Run flake8
-      #     command: |
-      #       poetry run flake8 .
+      - run:
+          name: Run flake8
+          command: |
+            poetry run flake8 .
 
       - run:
           name: Run Pytest, report coverage
