@@ -13,7 +13,7 @@
    :target: https://github.com/navarasu/opencv-log/blob/master/LICENSE
    :alt: MIT License
 
-====
+------
 
 An `OpenCV <https://opencv.org/>`_ based visual logger for debugging, logging and testing reporting an image processing code.
 
