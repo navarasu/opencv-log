@@ -99,15 +99,14 @@ workflows:
           branches:
             only:
               - docs_update
-
-  - docs-deploy:
-      requires:
-        - docs-build
-      filters:
-          tags:
-            only: /v[0-9]+(\.[0-9]+)*/
-          branches:
-            only:
+    - docs-deploy:
+        requires:
+          - docs-build
+        filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+            branches:
+              only:
               - docs_update
 
   deployment-workflow:
