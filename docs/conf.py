@@ -12,9 +12,9 @@
 #
 # import os
 # import sys
-import sphinx_rtd_theme # noqa
-
 # sys.path.insert(0, os.path.abspath('.'))
+
+import sphinx_rtd_theme # noqa
 
 
 # -- Project information -----------------------------------------------------
@@ -24,7 +24,7 @@ copyright = '2020, Navarasu'
 author = 'Navarasu'
 
 # The full version, including alpha/beta/rc tags
-release = '1.1.0'
+release = '1.2.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -33,25 +33,25 @@ release = '1.1.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx_rtd_theme'
+    'sphinx_rtd_theme',
+    'sphinx_copybutton',
+    'sphinx.ext.todo'
 ]
-
+todo_include_todos = True
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-
-# html_theme = 'alabaster'
-
+#
 html_theme = "sphinx_rtd_theme"
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -60,5 +60,8 @@ html_theme = "sphinx_rtd_theme"
 html_static_path = ['_static']
 
 html_theme_options = {
-    'vcs_pageview_mode': '',
+    'logo_only': True,
 }
+
+html_show_sourcelink = False
+html_logo = "_static/opencv-log.png"

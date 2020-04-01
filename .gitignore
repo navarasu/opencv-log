@@ -7,5 +7,5 @@ poetry.lock
 .env
 log/
 html_template.html
-docs/build
+docs/_build
 *.egg-info
