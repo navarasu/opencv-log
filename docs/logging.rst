@@ -48,7 +48,7 @@ Logging Houghlines
 Configuration
 =============
 
-Log Modes Options
+Log Mode Options
 #################
 
 .. code-block:: python
@@ -75,7 +75,7 @@ Set mode using ENV variable
 +------------+------------------------------------------------------------------------+
 
 
-Log Levels Options
+Log Level Options
 ##################
 
 .. code-block:: python
