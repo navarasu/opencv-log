@@ -91,6 +91,21 @@ workflows:
   build-and-test-workflow:
     jobs:
       - build-and-test
+  docs-update-workflow:
+    jobs:
+      - docs-build:
+          filters:
+            branches:
+              only:
+                - docs_update
+      - docs-deploy:
+          requires:
+            - docs-build
+          filters:
+            branches:
+              only:
+                - docs_update
+
   deployment-workflow:
     jobs:
 
