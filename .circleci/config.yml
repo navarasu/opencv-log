@@ -59,7 +59,7 @@ jobs:
           name: Build docs
           command: cd docs/ && poetry run make html
       - persist_to_workspace:
-          root: docs/build
+          root: docs/_build
           paths: html
 
   docs-deploy:
@@ -68,7 +68,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: docs/build
+          at: docs/_build
       - run:
           name: Disable jekyll builds
           command: touch docs/build/html/.nojekyll
@@ -83,7 +83,7 @@ jobs:
             - "c1:7b:84:2c:38:10:1a:72:fe:c9:b9:d7:1f:72:1e:e3"
       - run:
           name: Deploy docs to gh-pages branch
-          command: gh-pages --dotfiles --message "[skip ci] Updates" --dist docs/build/html
+          command: gh-pages --dotfiles --message "[skip ci] Updates" --dist docs/_build/html
 
 workflows:
   version: 2
