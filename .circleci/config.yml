@@ -92,22 +92,23 @@ workflows:
     jobs:
       - build-and-test
   docs-update-workflow:
-    - docs-build:
-      requires:
-        - deployment
-      filters:
-          branches:
-            only:
-              - docs_update
-    - docs-deploy:
+    jobs:
+      - docs-build:
         requires:
-          - docs-build
+          - deployment
         filters:
-            tags:
-              only: /v[0-9]+(\.[0-9]+)*/
             branches:
               only:
-              - docs_update
+                - docs_update
+      - docs-deploy:
+          requires:
+            - docs-build
+          filters:
+              tags:
+                only: /v[0-9]+(\.[0-9]+)*/
+              branches:
+                only:
+                - docs_update
 
   deployment-workflow:
     jobs:
