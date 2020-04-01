@@ -94,10 +94,10 @@ workflows:
   docs-update-workflow:
     jobs:
       - docs-build:
-        filters:
-          branches:
-            only:
-              - docs_update
+          filters:
+            branches:
+              only:
+                - docs_update
       - docs-deploy:
           requires:
             - docs-build
