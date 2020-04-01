@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Logging \ Debuging &mdash; opencv-log 1.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Logging an Image" href="logging.html" />
+    <link rel="prev" title="Why opencv-log?" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/opencv-log.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Logging \ Debuging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#run-in-log-mode">Run in Log mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-in-debug-mode">Run in Debug mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-in-none-off-mode">Run in None\OFF mode</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#testing-reporting">Testing Reporting</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Logging</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging an Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging.html#logging-houghlines">Logging Houghlines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging.html#configuration">Configuration</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">opencv-log</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Logging \ Debuging</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="logging-debuging">
+<h1>Logging \ Debuging<a class="headerlink" href="#logging-debuging" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cvlog</span> <span class="k">as</span> <span class="nn">log</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+<span class="c1"># image read using opencv</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;sample.png&quot;</span><span class="p">)</span>
+
+<span class="c1"># Based on the log mode, the below line</span>
+<span class="c1"># 1. Log the image to html (LOG mode) or</span>
+<span class="c1"># 2. Show the image using cv2.imshow (DEBUG mode) or</span>
+<span class="c1"># 3. Do Nothing (NONE mode)</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can run this file <code class="docutils literal notranslate"><span class="pre">log_example.py</span></code> with three modes,</p>
+<div class="section" id="run-in-log-mode">
+<h2>Run in Log mode<a class="headerlink" href="#run-in-log-mode" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">CVLOG_MODE</span><span class="o">=</span>LOG  python logging_example.py
+</pre></div>
+</div>
+<p>This creates the image a interaractive html file <code class="docutils literal notranslate"><span class="pre">log\log.html</span></code></p>
+<a class="reference internal image-reference" href="https://user-images.githubusercontent.com/20145075/69906004-ba752f00-13e2-11ea-8714-2425202148e8.png"><img alt="https://user-images.githubusercontent.com/20145075/69906004-ba752f00-13e2-11ea-8714-2425202148e8.png" src="https://user-images.githubusercontent.com/20145075/69906004-ba752f00-13e2-11ea-8714-2425202148e8.png" style="height: 350px;" /></a>
+</div>
+<div class="section" id="run-in-debug-mode">
+<h2>Run in Debug mode<a class="headerlink" href="#run-in-debug-mode" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">CVLOG_MODE</span><span class="o">=</span>LOG  python logging_example.py
+</pre></div>
+</div>
+<p>This shows the image using <code class="docutils literal notranslate"><span class="pre">cv2.imshow()</span></code></p>
+<a class="reference internal image-reference" href="https://user-images.githubusercontent.com/20145075/78092636-e2ef5300-73ed-11ea-80f7-3a496388cc3d.png"><img alt="https://user-images.githubusercontent.com/20145075/78092636-e2ef5300-73ed-11ea-80f7-3a496388cc3d.png" src="https://user-images.githubusercontent.com/20145075/78092636-e2ef5300-73ed-11ea-80f7-3a496388cc3d.png" style="height: 300px;" /></a>
+</div>
+<div class="section" id="run-in-none-off-mode">
+<h2>Run in None\OFF mode<a class="headerlink" href="#run-in-none-off-mode" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python logging_example.py
+</pre></div>
+</div>
+<p>This neither logs the image nor shows the image.</p>
+</div>
+</div>
+<div class="section" id="testing-reporting">
+<h1>Testing Reporting<a class="headerlink" href="#testing-reporting" title="Permalink to this headline">¶</a></h1>
+<p>It is a semi automated and it automates only the reporting part.
+The validation part is done manually and we need to report the result by pressing ‘y’ or ‘n’ key.</p>
+<p><strong>What it does?</strong></p>
+<p>This shows processed output image using cv2.imshow that need to verified.</p>
+<ul class="simple">
+<li><p>On presssing ‘y’ key, it report it as PASS</p></li>
+<li><p>On pressing any other key, it report it as FAIL and save output image for verification</p></li>
+<li><p>On any exception, it report it as ERROR with exception stack</p></li>
+</ul>
+<p>It generates CSV ot HTML report which can be used to for accuracy analysis.
+By combining the log and test reporting, we can generate an interaractive html to debug and analyse the issue offline.</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>HTML reporting is in milestone and it will be added in 1.4.0 version.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cvtest</span> <span class="k">as</span> <span class="nn">test</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+<span class="c1"># Example Process Image method from image path</span>
+<span class="k">def</span> <span class="nf">process_image</span><span class="p">(</span><span class="n">imagepath</span><span class="p">):</span>
+   <span class="k">if</span> <span class="n">imagepath</span> <span class="o">==</span> <span class="s2">&quot;error.png&quot;</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Some exception in processing image&quot;</span><span class="p">)</span>
+   <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">imagepath</span><span class="p">)</span>
+   <span class="k">return</span> <span class="n">img</span>
+
+<span class="c1"># List of the images path to be tested</span>
+<span class="n">test_image_paths</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;example1.png&quot;</span><span class="p">,</span><span class="s2">&quot;example1.png&quot;</span><span class="p">,</span><span class="s2">&quot;error.png&quot;</span><span class="p">]</span>
+
+<span class="c1"># Run the test</span>
+<span class="n">test</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">test_image_paths</span><span class="p">,</span> <span class="n">process_image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="logging.html" class="btn btn-neutral float-right" title="Logging an Image" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Why opencv-log?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Navarasu
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

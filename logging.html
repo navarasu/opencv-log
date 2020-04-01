@@ -1,0 +1,325 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Logging an Image &mdash; opencv-log 1.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Logging \ Debuging" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/opencv-log.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Logging \ Debuging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html#testing-reporting">Testing Reporting</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Logging</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Logging an Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#logging-houghlines">Logging Houghlines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#log-modes-options">Log Modes Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#log-levels-options">Log Levels Options</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">opencv-log</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Logging an Image</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="logging-an-image">
+<h1>Logging an Image<a class="headerlink" href="#logging-an-image" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cvlog</span> <span class="k">as</span> <span class="nn">log</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="c1"># Set default mode and level</span>
+<span class="c1"># If we dont set, then default mode is NONE</span>
+<span class="c1"># and the default level is ERROR</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">LOG</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">set_level</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">TRACE</span><span class="p">)</span>
+
+<span class="c1"># image read using opencv</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;sample.png&quot;</span><span class="p">)</span>
+
+<span class="c1"># log or show the image or do nothing based on</span>
+<span class="c1"># the current mode and current level</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">TRACE</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="logging-houghlines">
+<h1>Logging Houghlines<a class="headerlink" href="#logging-houghlines" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cvlog</span> <span class="k">as</span> <span class="nn">log</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;tests/data/sudoku.png&#39;</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">LOG</span><span class="p">)</span>
+
+<span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+<span class="n">edges</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">Canny</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="n">apertureSize</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">HoughLines</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+<span class="c1"># log or show the image by drawing the lines output</span>
+<span class="n">log</span><span class="o">.</span><span class="n">hough_lines</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="log-modes-options">
+<h2>Log Modes Options<a class="headerlink" href="#log-modes-options" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cvlog</span> <span class="k">as</span> <span class="nn">log</span>
+<span class="n">log</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set mode using ENV variable</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CVLOG_MODE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;DEBUG&quot;</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 86%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Mode.NONE</p></td>
+<td><div class="line-block">
+<div class="line">This is the default mode if we don’t set mode.Used in production</div>
+<div class="line">It neither creates HTML file nor shows an image.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Mode.LOG</p></td>
+<td><p>Logs the image to interactive HTML to analyze the issue offline.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Mode.DEBUG</p></td>
+<td><div class="line-block">
+<div class="line">Shows the image using <cite>cv2.imshow</cite> instead of logging to debug steps</div>
+<div class="line">in the development.It on move on to next log step on pressing any key</div>
+<div class="line">and exit the code on pressing <cite>ESC</cite>.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="log-levels-options">
+<h2>Log Levels Options<a class="headerlink" href="#log-levels-options" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cvlog</span> <span class="k">as</span> <span class="nn">log</span>
+<span class="n">log</span><span class="o">.</span><span class="n">set_level</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">TRACE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set mode using ENV variable</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CVLOG_MODE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;TRACE&quot;</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 79%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Level.ERROR</p></td>
+<td><p>Log or Show only ERROR level</p></td>
+</tr>
+<tr class="row-even"><td><p>Level.INFO</p></td>
+<td><p>Log or Show INFO and ERROR level</p></td>
+</tr>
+<tr class="row-odd"><td><p>Level.TRACE</p></td>
+<td><p>Log or Show TRACE, INFO and ERROR level steps</p></td>
+</tr>
+</tbody>
+</table>
+<p>Level valid for DEBUG and LOG mode</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Logging \ Debuging" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Navarasu
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
