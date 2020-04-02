@@ -23,7 +23,7 @@ Why opencv-log?
 
 .. raw:: html
 
-    <a href="https://blog.francium.tech/visually-debug-log-and-test-an-image-processing-code-using-opencv-and-python-36e2d944ebf2"><img src="https://user-images.githubusercontent.com/20145075/78162854-2042f780-7465-11ea-87ce-dd454cc7b5ba.png" height="190px" alt="Visually Debug, Log and Test an Image Processing Code using OpenCV and Python"></a>
+    <a href="https://blog.francium.tech/visually-debug-log-and-test-an-image-processing-code-using-opencv-and-python-36e2d944ebf2"><img src="https://user-images.githubusercontent.com/20145075/78162854-2042f780-7465-11ea-87ce-dd454cc7b5ba.png" max-height="190px" alt="Visually Debug, Log and Test an Image Processing Code using OpenCV and Python"></a>
 
 Installation
 ############
