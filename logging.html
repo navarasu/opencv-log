@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Logging an Image &mdash; opencv-log 1.2.0 documentation</title>
+  <title>Image &mdash; opencv-log 1.2.0 documentation</title>
   
 
   
@@ -38,6 +38,7 @@
   <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Set Log Mode" href="configuration.html" />
     <link rel="prev" title="Logging \ Debuging" href="getting_started.html" /> 
 </head>
 
@@ -92,13 +93,15 @@
 </ul>
 <p class="caption"><span class="caption-text">Logging</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Logging an Image</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#logging-houghlines">Logging Houghlines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#configuration">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#log-mode-options">Log Mode Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#log-level-options">Log Level Options</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#houghlines">Houghlines</a></li>
 </ul>
-</li>
+<p class="caption"><span class="caption-text">Configuration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Set Log Mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html#set-log-level">Set Log Level</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html#change-log-path">Change Log Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html#disable-log-rotation">Disable Log Rotation</a></li>
 </ul>
 
             
@@ -144,7 +147,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Logging an Image</li>
+      <li>Image</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -161,8 +164,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="logging-an-image">
-<h1>Logging an Image<a class="headerlink" href="#logging-an-image" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="image">
+<h1>Image<a class="headerlink" href="#image" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cvlog</span> <span class="k">as</span> <span class="nn">log</span>
 <span class="kn">import</span> <span class="nn">cv2</span>
 <span class="c1"># Set default mode and level</span>
@@ -187,8 +190,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="logging-houghlines">
-<h1>Logging Houghlines<a class="headerlink" href="#logging-houghlines" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="houghlines">
+<h1>Houghlines<a class="headerlink" href="#houghlines" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cvlog</span> <span class="k">as</span> <span class="nn">log</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">cv2</span>
@@ -205,75 +208,6 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="configuration">
-<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="log-mode-options">
-<h2>Log Mode Options<a class="headerlink" href="#log-mode-options" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cvlog</span> <span class="k">as</span> <span class="nn">log</span>
-<span class="n">log</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Set mode using ENV variable</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CVLOG_MODE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;DEBUG&quot;</span>
-</pre></div>
-</div>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 14%" />
-<col style="width: 86%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p>Mode.NONE</p></td>
-<td><div class="line-block">
-<div class="line">This is the default mode if we don’t set mode.Used in production</div>
-<div class="line">It neither creates HTML file nor shows an image.</div>
-</div>
-</td>
-</tr>
-<tr class="row-even"><td><p>Mode.LOG</p></td>
-<td><p>Logs the image to interactive HTML to analyze the issue offline.</p></td>
-</tr>
-<tr class="row-odd"><td><p>Mode.DEBUG</p></td>
-<td><div class="line-block">
-<div class="line">Shows the image using <cite>cv2.imshow</cite> instead of logging to debug steps</div>
-<div class="line">in the development.It on move on to next log step on pressing any key</div>
-<div class="line">and exit the code on pressing <cite>ESC</cite>.</div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="log-level-options">
-<h2>Log Level Options<a class="headerlink" href="#log-level-options" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cvlog</span> <span class="k">as</span> <span class="nn">log</span>
-<span class="n">log</span><span class="o">.</span><span class="n">set_level</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">TRACE</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Set mode using ENV variable</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CVLOG_MODE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;TRACE&quot;</span>
-</pre></div>
-</div>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 21%" />
-<col style="width: 79%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p>Level.ERROR</p></td>
-<td><p>Log or Show only ERROR level</p></td>
-</tr>
-<tr class="row-even"><td><p>Level.INFO</p></td>
-<td><p>Log or Show INFO and ERROR level</p></td>
-</tr>
-<tr class="row-odd"><td><p>Level.TRACE</p></td>
-<td><p>Log or Show TRACE, INFO and ERROR level steps</p></td>
-</tr>
-</tbody>
-</table>
-<p>Level valid for DEBUG and LOG mode</p>
-</div>
-</div>
 
 
            </div>
@@ -282,6 +216,8 @@
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="configuration.html" class="btn btn-neutral float-right" title="Set Log Mode" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="getting_started.html" class="btn btn-neutral float-left" title="Logging \ Debuging" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
