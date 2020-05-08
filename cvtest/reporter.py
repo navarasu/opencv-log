@@ -16,9 +16,9 @@ class Reporter:
     def __init__(self):
         if not self.__initialised:
             self.__initialised = True
-            report_path = Config().log_path() + "/report"
-            self.image_path = report_path + '/images/'
-            self.reporter = CsvReporter(report_path + "/report.csv")
+            report_path = os.path.join(Config().log_path(), "report")
+            self.image_path = os.path.join(report_path, 'images')
+            self.reporter = CsvReporter(os.path.join(report_path, "report.csv"))
 
     def result(self, input_image, key_pressed, output_img):
         message = ""

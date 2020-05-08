@@ -55,4 +55,4 @@ def show_image(title, img):
 def __init():
     global html_logger
     if Config().curent_mode() == Mode.LOG and html_logger is None:
-        html_logger = hl.HtmlLogger(Config().log_path() + "/log.html")
+        html_logger = hl.HtmlLogger()

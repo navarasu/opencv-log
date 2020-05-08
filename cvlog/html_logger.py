@@ -1,4 +1,3 @@
-from shutil import rmtree
 import os
 import cvlog.html_template as ht
 import datetime
@@ -6,13 +5,12 @@ import json
 from inspect import stack
 from datetime import datetime, timezone # noqa
 from uuid import uuid4
+from cvlog.config import Config
 
 class HtmlLogger:
-    def __init__(self, file_path):
-        self.__file_path = file_path
+    def __init__(self):
         self.__last_pos = -len(ht.CONTENT_END)
-        self.__clear_dir()
-        self.__create_file()
+        self.__rotate_log()
 
     def log_image(self, level, img_data):
         data = ''.join(['<img src="data:image/png;base64, ', img_data, '"/>'])
@@ -31,7 +29,7 @@ class HtmlLogger:
 
     def __append(self, html_text_seq):
         self.__create_file()
-        with open(self.__file_path, "rb+") as html:
+        with open(self.__file_path(), "rb+") as html:
             if(self.__no_data):
                 html.seek(-len(ht.NO_DATA_CONTENT) + self.__last_pos, 2)
                 self.__no_data = False
@@ -41,19 +39,24 @@ class HtmlLogger:
             html.truncate()
 
     def __create_file(self):
-        if os.path.exists(self.__file_path):
+        if os.path.exists(self.__file_path()):
+            self.__no_data = False
             return
-        dir_path = os.path.dirname(self.__file_path)
+        dir_path = os.path.dirname(self.__file_path())
         if not os.path.exists(dir_path):
             os.makedirs(dir_path)
-        with open(self.__file_path, 'w') as html:
+        with open(self.__file_path(), 'w') as html:
             html.writelines(['<html>', ht.STYLE, ht.SCRIPT, ht.CONTENT_START, ht.NO_DATA_CONTENT, ht.CONTENT_END])
         self.__no_data = True
 
-    def __clear_dir(self):
-        dir_path = os.path.dirname(self.__file_path)
-        if os.path.exists(dir_path):
-            rmtree(dir_path)
+    def __rotate_log(self):
+        if os.path.exists(self.__file_path()):
+            if Config().rotate_log():
+                time_stamp = datetime.fromtimestamp(os.path.getctime(self.__file_path())).strftime("%y-%m-%d.%H%M%S")
+                rename_path = os.path.join(Config().log_path(), 'cvlog_' + str(time_stamp) + '.html')
+                os.rename(self.__file_path(), rename_path)
+        else:
+            self.__create_file()
 
     def __get_log_info(self):
         short_stack, long_stack = self.__stack_trace(6)
@@ -69,3 +72,6 @@ class HtmlLogger:
 
     def __unique_id(self):
         return str(uuid4())
+
+    def __file_path(self):
+        return os.path.join(Config().log_path(), "cvlog.html")
