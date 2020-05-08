@@ -11,3 +11,9 @@
    :caption: Logging
 
    logging
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Configuration
+
+   configuration
