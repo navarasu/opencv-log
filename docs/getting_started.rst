@@ -34,7 +34,7 @@ Run in Debug mode
 #################
 .. code-block:: sh
 
-   CVLOG_MODE=LOG  python logging_example.py
+   CVLOG_MODE=DEBUG  python logging_example.py
 
 This shows the image using ``cv2.imshow()``
 
