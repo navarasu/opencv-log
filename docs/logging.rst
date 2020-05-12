@@ -43,3 +43,22 @@ Houghlines
 
     # log or show the image by drawing the lines output
     log.hough_lines(log.Level.ERROR, lines, img)
+
+HoughCircles
+============
+
+.. code-block:: python
+
+    import cvlog as log
+    import numpy as np
+    import cv2
+
+    img = cv2.imread('tests/data/board.jpg')
+    log.set_mode(log.Mode.LOG)
+
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    blur = cv2.medianBlur(gray, 5)
+    circles = cv2.HoughCircles(blur, cv2.HOUGH_GRADIENT, 1, 10, np.array([]), 100, 30, 1, 30)
+
+    # log or show the image by drawing the circles output
+    log.hough_circles(log.Level.ERROR, circles, img)
