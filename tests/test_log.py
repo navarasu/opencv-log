@@ -5,6 +5,13 @@ from .utils import read_file, remove_dirs, get_html
 import os
 from unittest.mock import patch
 
+def test_no_data_section():
+    remove_dirs('log/')
+    log.set_mode(log.Mode.LOG)
+    log_all_level(cv2.imread("tests/data/orange.png"))
+    logitem = get_html('log/cvlog.html').select('#no-data')
+    assert len(logitem) == 0
+
 def test_default_mode_default_level():
     remove_dirs('log/')
     log_all_level(cv2.imread("tests/data/orange.png"))
@@ -89,7 +96,20 @@ def test_log_hough_lines():
     logitem = get_html('log/cvlog.html').select('.log-list .log-item')
     assert logitem[0]['logdata'] == read_file('tests/data/expected/houghline_img.txt')
 
+def test_log_hough_circles():
+    remove_dirs('log/')
+    img = cv2.imread('tests/data/board.jpg')
+    log.set_mode(log.Mode.LOG)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    blur = cv2.medianBlur(gray, 5)
+    circles = cv2.HoughCircles(blur, cv2.HOUGH_GRADIENT, 1, 10, np.array([]), 100, 30, 1, 30)
+
+    log.hough_circles(log.Level.ERROR, circles, img)
+    logitem = get_html('log/cvlog.html').select('.log-list .log-item')
+    assert logitem[0]['logdata'] == read_file('tests/data/expected/houghcircle_img.txt')
+
 def log_all_level(img):
     log.image(log.Level.TRACE, img)
     log.image(log.Level.INFO, img)
     log.image(log.Level.ERROR, img)
+
