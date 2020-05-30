@@ -62,3 +62,25 @@ HoughCircles
 
     # log or show the image by drawing the circles output
     log.hough_circles(log.Level.ERROR, circles, img)
+
+Contour
+========
+
+.. code-block:: python
+
+    import cvlog as log
+    import numpy as np
+    import cv2
+
+    img = cv2.imread('tests/data/contour.jpg')
+    log.set_mode(log.Mode.LOG)
+
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    ret, thresh = cv2.threshold(gray, 127, 255, 0)
+    image, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+    # log or show the image by drawing the all contour
+    log.contours(log.Level.ERROR, contours, img)
+
+    # log or show the image by drawing only first index contour
+    log.contours(log.Level.ERROR, contours, img, 1)

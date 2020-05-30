@@ -108,6 +108,17 @@ def test_log_hough_circles():
     logitem = get_html('log/cvlog.html').select('.log-list .log-item')
     assert logitem[0]['logdata'] == read_file('tests/data/expected/houghcircle_img.txt')
 
+def test_contours():
+    remove_dirs('log/')
+    img = cv2.imread('tests/data/contour.jpg')
+    log.set_mode(log.Mode.LOG)
+    imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    ret, thresh = cv2.threshold(imgray, 127, 255, 0)
+    image, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    log.contours(log.Level.ERROR, contours, img)
+    logitem = get_html('log/cvlog.html').select('.log-list .log-item')
+    assert logitem[0]['logdata'] == read_file('tests/data/expected/contour.txt')
+
 def log_all_level(img):
     log.image(log.Level.TRACE, img)
     log.image(log.Level.INFO, img)
