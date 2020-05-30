@@ -10,6 +10,7 @@ from cvlog.config import Config
 class HtmlLogger:
     def __init__(self):
         self.__last_pos = -len(ht.CONTENT_END)
+        self.__no_data = False
         self.__rotate_log()
 
     def log_image(self, level, img_data):
@@ -30,7 +31,7 @@ class HtmlLogger:
     def __append(self, html_text_seq):
         self.__create_file()
         with open(self.__file_path(), "rb+") as html:
-            if(self.__no_data):
+            if self.__no_data:
                 html.seek(-len(ht.NO_DATA_CONTENT) + self.__last_pos, 2)
                 self.__no_data = False
             else:
@@ -40,7 +41,6 @@ class HtmlLogger:
 
     def __create_file(self):
         if os.path.exists(self.__file_path()):
-            self.__no_data = False
             return
         dir_path = os.path.dirname(self.__file_path())
         if not os.path.exists(dir_path):
@@ -50,13 +50,10 @@ class HtmlLogger:
         self.__no_data = True
 
     def __rotate_log(self):
-        if os.path.exists(self.__file_path()):
-            if Config().rotate_log():
-                time_stamp = datetime.fromtimestamp(os.path.getctime(self.__file_path())).strftime("%y-%m-%d.%H%M%S")
-                rename_path = os.path.join(Config().log_path(), 'cvlog_' + str(time_stamp) + '.html')
-                os.rename(self.__file_path(), rename_path)
-        else:
-            self.__create_file()
+        if Config().rotate_log() and os.path.exists(self.__file_path()):
+            time_stamp = datetime.fromtimestamp(os.path.getctime(self.__file_path())).strftime("%y-%m-%d.%H%M%S")
+            rename_path = os.path.join(Config().log_path(), 'cvlog_' + str(time_stamp) + '.html')
+            os.rename(self.__file_path(), rename_path)
 
     def __get_log_info(self):
         short_stack, long_stack = self.__stack_trace(6)
