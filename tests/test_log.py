@@ -10,6 +10,13 @@ def test_default_mode_default_level():
     log_all_level(cv2.imread("tests/data/orange.png"))
     assert os.path.exists('log/cvlog.html') is False
 
+def test_no_data_section():
+    remove_dirs('log/')
+    log.set_mode(log.Mode.LOG)
+    log_all_level(cv2.imread("tests/data/orange.png"))
+    logitem = get_html('log/cvlog.html').select('#no-data')
+    assert len(logitem) == 0
+
 def test_log_mode_default_level():
     remove_dirs('log/')
     log.set_mode(log.Mode.LOG)
