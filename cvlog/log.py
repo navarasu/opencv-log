@@ -34,6 +34,11 @@ def hough_circles(level, circles, cv_image):
             cv2.circle(debug_image, (x, y), 2, (0, 255, 0), 2)  # center
     image(level, debug_image)
 
+def contours(level, contours, cv_image, index=-1):
+    debug_image = cv_image.copy()
+    cv2.drawContours(debug_image, contours, index, (0, 255, 0), 2)
+    image(level, debug_image)
+
 def find_line_pts(line):
     r, theta = line[0]
     a = np.cos(theta)
