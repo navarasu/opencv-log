@@ -60,6 +60,8 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 Please make sure to update tests as appropriate.
 
+Refer `Guidelines <https://navarasu.github.io/opencv-log/CONTRIBUTION.md>`_ for more information.
+
 License
 #######
 
