@@ -121,7 +121,7 @@ def test_contours():
 
 def test_keypoints():
     remove_dirs('log/')
-    img = cv2.imread('tests/data/orange.jpg')
+    img = cv2.imread('tests/data/orange.png')
     log.set_mode(log.Mode.LOG)
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
