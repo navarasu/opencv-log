@@ -119,6 +119,19 @@ def test_contours():
     logitem = get_html('log/cvlog.html').select('.log-list .log-item')
     assert logitem[0]['logdata'] == read_file('tests/data/expected/contour.txt')
 
+def test_keypoints():
+    remove_dirs('log/')
+    img = cv2.imread('tests/data/orange.jpg')
+    log.set_mode(log.Mode.LOG)
+    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    orb = cv2.ORB_create()
+    kp, _ = orb.detectAndCompute(gray_img, None)
+
+    log.keypoints(log.Level.ERROR, kp, img, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+    log_item = get_html('log/cvlog.html').select('.log-list .log-item')
+    assert log_item[0]['logdata'] == read_file('tests/data/expected/keypoints.txt')
+
 def log_all_level(img):
     log.image(log.Level.TRACE, img)
     log.image(log.Level.INFO, img)
