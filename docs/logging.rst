@@ -84,3 +84,23 @@ Contour
 
     # log or show the image by drawing only first index contour
     log.contours(log.Level.ERROR, contours, img, 1)
+
+Keypoints
+==========
+
+.. code-block:: python
+
+    import cv2
+    import cvlog as log
+
+    img = cv2.imread('tests/data/orange.png')
+    log.set_mode(log.Mode.LOG)
+
+    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # feature key points from SIFT, SURF, FAST or ORB
+    orb = cv2.ORB_create()
+    kp, _ = orb.detectAndCompute(gray_img, None)
+
+    # log or show the image with key points
+    log.keypoints(log.Level.ERROR, kp, img, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
