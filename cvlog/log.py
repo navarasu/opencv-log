@@ -39,6 +39,11 @@ def contours(level, contours, cv_image, index=-1):
     cv2.drawContours(debug_image, contours, index, (0, 255, 0), 2)
     image(level, debug_image)
 
+def keypoints(level, kp, cv_image, flags=0):
+    debug_image = cv_image.copy()
+    cv2.drawKeypoints(debug_image, kp, debug_image, (0, 255, 0), flags=flags)
+    image(level, debug_image)
+
 def find_line_pts(line):
     r, theta = line[0]
     a = np.cos(theta)
