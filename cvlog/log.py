@@ -7,22 +7,20 @@ from cvlog.config import Config, Mode
 html_logger = None
 
 def image(level, image):
-    if image is None:
-        return
-    __init()
-    if Config().curent_level().value < level.value:
-        return
-    if Config().curent_mode() == Mode.DEBUG:
-        show_image(level.name, image)
-    elif Config().curent_mode() == Mode.LOG:
-        log_image(level.name, image)
+    __image(level, 'image', image)
+
+def edges(level, image):
+    __image(level, 'edges', image)
+
+def threshold(level, image):
+    __image(level, 'threshold', image)
 
 def hough_lines(level, lines, cv_image):
     debug_image = cv_image.copy()
     for line in lines:
         (x1, y1), (x2, y2) = find_line_pts(line)
         cv2.line(debug_image, (x1, y1), (x2, y2), (0, 0, 255), 2)
-    image(level, debug_image)
+    __image(level, 'hough lines', debug_image)
 
 def hough_circles(level, circles, cv_image):
     debug_image = cv_image.copy()
@@ -32,17 +30,17 @@ def hough_circles(level, circles, cv_image):
             x, y, r = circles[0][i]
             cv2.circle(debug_image, (x, y), r, (0, 0, 255), 2)
             cv2.circle(debug_image, (x, y), 2, (0, 255, 0), 2)  # center
-    image(level, debug_image)
+    __image(level, 'hough circles', debug_image)
 
 def contours(level, contours, cv_image, index=-1):
     debug_image = cv_image.copy()
     cv2.drawContours(debug_image, contours, index, (0, 255, 0), 2)
-    image(level, debug_image)
+    __image(level, 'contours', debug_image)
 
 def keypoints(level, kp, cv_image, flags=0):
     debug_image = cv_image.copy()
     cv2.drawKeypoints(debug_image, kp, debug_image, (0, 255, 0), flags=flags)
-    image(level, debug_image)
+    __image(level, 'key points', debug_image)
 
 def find_line_pts(line):
     r, theta = line[0]
@@ -56,16 +54,26 @@ def find_line_pts(line):
     y2 = int(y0 - 1000 * (a))
     return (x1, y1), (x2, y2)
 
-def log_image(level, img):
+def __image(level, log_type, image):
+    if image is None:
+        return
+    __init()
+    if Config().curent_level().value < level.value:
+        return
+    if Config().curent_mode() == Mode.DEBUG:
+        show_image(level.name, log_type, image)
+    elif Config().curent_mode() == Mode.LOG:
+        log_image(level.name, log_type, image)
+
+def log_image(level, log_type, img):
     retval, buffer = cv2.imencode('.png', img)
     if not retval:
         return None
-    html_logger.log_image(level, base64.b64encode(buffer).decode())
+    html_logger.log_image(level, log_type, base64.b64encode(buffer).decode())
 
-
-def show_image(title, img):
+def show_image(title, log_type, img):
     cv2.namedWindow('window', cv2.WINDOW_NORMAL)
-    cv2.setWindowTitle('window', title)
+    cv2.setWindowTitle('window', title + ':' + log_type)
     cv2.imshow('window', img)
     value = cv2.waitKey(0)
     if value == 27:
