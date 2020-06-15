@@ -25,6 +25,42 @@ Image
 
     log.image(log.Level.TRACE, img)
 
+
+Threshold
+=========
+
+*This is just an alias to image to diffentiate log type in log list*
+
+.. code-block:: python
+
+    import cvlog as log
+    import cv2
+    img = cv2.imread('tests/data/board.jpg')
+    log.set_mode(log.Mode.LOG)
+
+    imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    ret, thresh = cv2.threshold(imgray, 127, 255, 0)
+    log.threshold(log.Level.ERROR, thresh)
+
+Edges
+=====
+
+.. code-block:: python
+
+    import cvlog as log
+    import cv2
+
+    img = cv2.imread('tests/data/sudoku.png')
+    log.set_mode(log.Mode.LOG)
+
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    edges = cv2.Canny(gray, 50, 150, apertureSize=3)
+    log.edges(log.Level.ERROR, edges)
+
+.. note:: *Edges and Threshold are just an alias to image to diffentiate log type in log list*
+
+.. image:: https://user-images.githubusercontent.com/20145075/84652210-e1cbbd80-af28-11ea-8f7b-11d574140809.png
+
 Houghlines
 ==========
 
@@ -104,3 +140,20 @@ Keypoints
     # log or show the image with key points
     log.keypoints(log.Level.ERROR, kp, img, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
+Additional Params
+=================
+
+msg=
+****
+    *This optional parameter to log text message along with any log methods*
+
+.. code-block:: python
+
+    log.image(log.Level.ERROR, img, msg='Lorem ipsum dolor sit amet, ne persius reprehendunt mei.')
+
+    log.contours(log.Level.ERROR, contours, img, msg='Lorem ipsum dolor sit amet, ne persius reprehendunt mei.')
+
+    log.keypoints(log.Level.ERROR, kp, img,flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ,
+                                           msg='Lorem ipsum dolor sit amet, ne persius reprehendunt mei.')
+
+.. image:: https://user-images.githubusercontent.com/20145075/84654098-39b7f380-af2c-11ea-8860-09b38adaeac0.png
