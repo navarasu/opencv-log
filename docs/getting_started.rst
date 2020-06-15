@@ -27,8 +27,7 @@ Run in Log mode
 
 This creates the image a interaractive html file ``log\log.html``
 
-.. image:: https://user-images.githubusercontent.com/20145075/69906004-ba752f00-13e2-11ea-8714-2425202148e8.png
-   :height: 350px
+.. image:: https://user-images.githubusercontent.com/20145075/84652724-b8f7f800-af29-11ea-9b15-2ce86640b629.png
 
 Run in Debug mode
 #################

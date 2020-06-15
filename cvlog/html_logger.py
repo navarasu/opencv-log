@@ -14,20 +14,23 @@ class HtmlLogger:
         self.__no_data = False
         self.__rotate_log()
 
-    def log_image(self, level, log_type, img_data):
+    def log_image(self, level, log_type, img_data, msg):
         data = ''.join(['<img src="data:image/png;base64, ', img_data, '"/>'])
-        self.__append_log_item(level, log_type, data)
+        self.__append_log_item(level, log_type, data, msg)
 
-    def __append_log_item(self, level, log_type, log_detail):
+    def __append_log_item(self, level, log_type, log_detail, msg):
         template = '<div class="log-item" id="'
         template += self.__unique_id() + '" onclick="show_data(this.id)"'
         short_stack, data = self.__get_log_info()
         data['level'] = level
         data['log_type'] = log_type
+        data['msg'] = msg
         template += "data='" + json.dumps(data) + "' logdata = '" + log_detail + "'>"
         template += '<div class="log-type">' + log_type + '</div>'
         template += '<h3 class="tvme">' + data['time_stamp']
         template += '<span class="level ' + level.lower() + '">' + data['level'] + '</span></h3>'
+        if msg is not None:
+            template += '<p class="description">' + msg + '</p>'
         template += '<p class="line">' + re.sub(r'^/', '', short_stack) + '</p></div>'
         self.__append([template])
 
