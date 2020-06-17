@@ -94,7 +94,16 @@
 <p class="caption"><span class="caption-text">Logging</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#threshold">Threshold</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#edges">Edges</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#houghlines">Houghlines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#houghcircles">HoughCircles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#contour">Contour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#keypoints">Keypoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#additional-params">Additional Params</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#msg">msg=</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">Configuration</span></p>
 <ul>
@@ -190,6 +199,39 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="threshold">
+<h1>Threshold<a class="headerlink" href="#threshold" title="Permalink to this headline">¶</a></h1>
+<p><em>This is just an alias to image to diffentiate log type in log list</em></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cvlog</span> <span class="k">as</span> <span class="nn">log</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;tests/data/board.jpg&#39;</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">LOG</span><span class="p">)</span>
+
+<span class="n">imgray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+<span class="n">ret</span><span class="p">,</span> <span class="n">thresh</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">imgray</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="n">thresh</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="edges">
+<h1>Edges<a class="headerlink" href="#edges" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cvlog</span> <span class="k">as</span> <span class="nn">log</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;tests/data/sudoku.png&#39;</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">LOG</span><span class="p">)</span>
+
+<span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+<span class="n">edges</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">Canny</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="n">apertureSize</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="n">edges</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><em>Edges and Threshold are just an alias to image to diffentiate log type in log list</em></p>
+</div>
+<img alt="https://user-images.githubusercontent.com/20145075/84652210-e1cbbd80-af28-11ea-8f7b-11d574140809.png" src="https://user-images.githubusercontent.com/20145075/84652210-e1cbbd80-af28-11ea-8f7b-11d574140809.png" />
+</div>
 <div class="section" id="houghlines">
 <h1>Houghlines<a class="headerlink" href="#houghlines" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cvlog</span> <span class="k">as</span> <span class="nn">log</span>
@@ -206,6 +248,81 @@
 <span class="c1"># log or show the image by drawing the lines output</span>
 <span class="n">log</span><span class="o">.</span><span class="n">hough_lines</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="houghcircles">
+<h1>HoughCircles<a class="headerlink" href="#houghcircles" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cvlog</span> <span class="k">as</span> <span class="nn">log</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;tests/data/board.jpg&#39;</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">LOG</span><span class="p">)</span>
+
+<span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+<span class="n">blur</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">medianBlur</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">circles</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">HoughCircles</span><span class="p">(</span><span class="n">blur</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">HOUGH_GRADIENT</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([]),</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+
+<span class="c1"># log or show the image by drawing the circles output</span>
+<span class="n">log</span><span class="o">.</span><span class="n">hough_circles</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="n">circles</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="contour">
+<h1>Contour<a class="headerlink" href="#contour" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cvlog</span> <span class="k">as</span> <span class="nn">log</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;tests/data/contour.jpg&#39;</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">LOG</span><span class="p">)</span>
+
+<span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+<span class="n">ret</span><span class="p">,</span> <span class="n">thresh</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">image</span><span class="p">,</span> <span class="n">contours</span><span class="p">,</span> <span class="n">hierarchy</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span><span class="n">thresh</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">RETR_TREE</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_SIMPLE</span><span class="p">)</span>
+
+<span class="c1"># log or show the image by drawing the all contour</span>
+<span class="n">log</span><span class="o">.</span><span class="n">contours</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="n">contours</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+
+<span class="c1"># log or show the image by drawing only first index contour</span>
+<span class="n">log</span><span class="o">.</span><span class="n">contours</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="n">contours</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="keypoints">
+<h1>Keypoints<a class="headerlink" href="#keypoints" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">cvlog</span> <span class="k">as</span> <span class="nn">log</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;tests/data/orange.png&#39;</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">LOG</span><span class="p">)</span>
+
+<span class="n">gray_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+<span class="c1"># feature key points from SIFT, SURF, FAST or ORB</span>
+<span class="n">orb</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">ORB_create</span><span class="p">()</span>
+<span class="n">kp</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">orb</span><span class="o">.</span><span class="n">detectAndCompute</span><span class="p">(</span><span class="n">gray_img</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="c1"># log or show the image with key points</span>
+<span class="n">log</span><span class="o">.</span><span class="n">keypoints</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="n">kp</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="additional-params">
+<h1>Additional Params<a class="headerlink" href="#additional-params" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="msg">
+<h2>msg=<a class="headerlink" href="#msg" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p><em>This optional parameter to log text message along with any log methods</em></p>
+</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">log</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s1">&#39;Lorem ipsum dolor sit amet, ne persius reprehendunt mei.&#39;</span><span class="p">)</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">contours</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="n">contours</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s1">&#39;Lorem ipsum dolor sit amet, ne persius reprehendunt mei.&#39;</span><span class="p">)</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">keypoints</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">Level</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="n">kp</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span><span class="n">flags</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS</span> <span class="p">,</span>
+                                       <span class="n">msg</span><span class="o">=</span><span class="s1">&#39;Lorem ipsum dolor sit amet, ne persius reprehendunt mei.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="https://user-images.githubusercontent.com/20145075/84654098-39b7f380-af2c-11ea-8860-09b38adaeac0.png" src="https://user-images.githubusercontent.com/20145075/84654098-39b7f380-af2c-11ea-8860-09b38adaeac0.png" />
 </div>
 </div>
 

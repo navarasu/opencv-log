@@ -99,7 +99,13 @@
 <p class="caption"><span class="caption-text">Logging</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="logging.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging.html#threshold">Threshold</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging.html#edges">Edges</a></li>
 <li class="toctree-l1"><a class="reference internal" href="logging.html#houghlines">Houghlines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging.html#houghcircles">HoughCircles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging.html#contour">Contour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging.html#keypoints">Keypoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging.html#additional-params">Additional Params</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Configuration</span></p>
 <ul>
@@ -193,11 +199,11 @@
 </pre></div>
 </div>
 <p>This creates the image a interaractive html file <code class="docutils literal notranslate"><span class="pre">log\log.html</span></code></p>
-<a class="reference internal image-reference" href="https://user-images.githubusercontent.com/20145075/69906004-ba752f00-13e2-11ea-8714-2425202148e8.png"><img alt="https://user-images.githubusercontent.com/20145075/69906004-ba752f00-13e2-11ea-8714-2425202148e8.png" src="https://user-images.githubusercontent.com/20145075/69906004-ba752f00-13e2-11ea-8714-2425202148e8.png" style="height: 350px;" /></a>
+<img alt="https://user-images.githubusercontent.com/20145075/84652724-b8f7f800-af29-11ea-9b15-2ce86640b629.png" src="https://user-images.githubusercontent.com/20145075/84652724-b8f7f800-af29-11ea-9b15-2ce86640b629.png" />
 </div>
 <div class="section" id="run-in-debug-mode">
 <h2>Run in Debug mode<a class="headerlink" href="#run-in-debug-mode" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">CVLOG_MODE</span><span class="o">=</span>LOG  python logging_example.py
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">CVLOG_MODE</span><span class="o">=</span>DEBUG  python logging_example.py
 </pre></div>
 </div>
 <p>This shows the image using <code class="docutils literal notranslate"><span class="pre">cv2.imshow()</span></code></p>
