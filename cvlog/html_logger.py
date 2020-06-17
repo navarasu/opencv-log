@@ -3,6 +3,7 @@ import cvlog.html_template as ht
 import datetime
 import json
 import re
+import time
 from inspect import stack
 from datetime import datetime, timezone # noqa
 from uuid import uuid4
@@ -32,7 +33,7 @@ class HtmlLogger:
         if msg is not None:
             template += '<p class="description">' + msg + '</p>'
         template += '<p class="line">' + re.sub(r'^/', '', short_stack) + '</p></div>'
-        self.__append([template])
+        self.__try_append([template])
 
     def __append(self, html_text_seq):
         self.__create_file()
@@ -44,6 +45,20 @@ class HtmlLogger:
                 html.seek(self.__last_pos, 2)
             html.write((''.join(html_text_seq).join(['\n', ht.CONTENT_END])).encode('utf-8'))
             html.truncate()
+
+    def __try_append(self, html_text_seq):
+        count = 0
+        while self.__is_appended(html_text_seq) and count < 5:
+            time.sleep(0.1)
+            count += 1
+
+    def __is_appended(self, html_text_seq):
+        failed = False
+        try:
+            self.__append(html_text_seq)
+        except IOError:
+            failed = True
+        return failed
 
     def __create_file(self):
         if os.path.exists(self.__file_path()):
@@ -57,9 +72,16 @@ class HtmlLogger:
 
     def __rotate_log(self):
         if Config().rotate_log() and os.path.exists(self.__file_path()):
-            time_stamp = datetime.fromtimestamp(os.path.getctime(self.__file_path())).strftime("%y-%m-%d.%H%M%S")
-            rename_path = os.path.join(Config().log_path(), 'cvlog_' + str(time_stamp) + '.html')
-            os.rename(self.__file_path(), rename_path)
+            os.rename(self.__file_path(), self.__rename_file_path())
+
+    def __rename_file_path(self):
+        time_stamp = datetime.fromtimestamp(os.path.getctime(self.__file_path())).strftime("%y-%m-%d.%H%M%S")
+        rename_path = os.path.join(Config().log_path(), 'cvlog_' + str(time_stamp) + '.html')
+        if os.path.exists(rename_path):
+            rename_path = os.path.join(Config().log_path(), 'cvlog_' + str(time_stamp) + '_01.html')
+        if os.path.exists(rename_path):
+            os.remove(rename_path)
+        return rename_path
 
     def __get_log_info(self):
         short_stack, long_stack = self.__stack_trace(6)
