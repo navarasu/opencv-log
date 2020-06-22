@@ -66,7 +66,7 @@ def test_contours():
     log.set_mode(log.Mode.LOG)
     imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(imgray, 127, 255, 0)
-    image, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     log.contours(log.Level.ERROR, contours, img)
     logitem = get_html('log/cvlog.html').select('.log-list .log-item')
     assert logitem[0].select('.log-type')[0].text == 'contours'
@@ -91,7 +91,7 @@ def test_message():
     log.set_mode(log.Mode.LOG)
     imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(imgray, 127, 255, 0)
-    image, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     message = 'Lorem ipsum dolor sit amet, ne persius reprehendunt mei. Ea summo elitr munere his, et consul offendit recteque sea, quis elit nam ut.'
     log.image(log.Level.ERROR, img)
     log.contours(log.Level.ERROR, contours, img, msg=message)

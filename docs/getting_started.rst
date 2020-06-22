@@ -67,7 +67,7 @@ It generates CSV ot HTML report which can be used to for accuracy analysis.
 By combining the log and test reporting, we can generate an interaractive html to debug and analyse the issue offline.
 
 .. todo:: 
-    HTML reporting is in milestone and it will be added in 1.4.0 version.
+    HTML reporting is in milestone and it will be added in 1.6.0 version.
 
 
 .. code-block:: python

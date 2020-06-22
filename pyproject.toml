@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "opencv-log"
-version = "1.3.0"
+version = "1.4.0"
 description = "OpenCV based visual logger for debugging,logging and testing image processing code"
 authors = ["Navarasu <navarasu@outlook.com>"]
 readme = 'README.rst'
@@ -16,17 +16,17 @@ packages = [ { include = "cvlog" }]
     
 [tool.poetry.dependencies]
 python = "^3.5"
-opencv-python = "^3.4"
+opencv-python = ">=3.3"
 
 [tool.poetry.dev-dependencies]
-pytest = "^3.0"
-flake8 ="^3.7"
-coverage="^4.5"
-coveralls="^1.8"
-beautifulsoup4="4.8.2"
-sphinx="2.4.4"
-sphinx-rtd-theme="0.4.3"
-sphinx-copybutton="^0.2.10"
+pytest = ">=3.0"
+flake8 =">=3.7"
+coverage=">=4.5"
+coveralls=">=1.8"
+beautifulsoup4=">=4.8.2"
+sphinx=">=2.4.4"
+sphinx-rtd-theme=">=0.4.3"
+sphinx-copybutton=">=0.2.10"
 
 [build-system]
 requires = ["poetry>=0.12"]
