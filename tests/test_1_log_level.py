@@ -26,7 +26,7 @@ def test_log_mode_default_level():
     assert level_tag.get_text() == 'ERROR'
     assert level_tag['class'] == ['level', 'error']
 
-@patch('cvlog.log.show_image')
+@patch('cvlog.Logger.show_image')
 def test_debug_mode_default_level(show_image):
     remove_dirs('log/')
     log.set_mode(log.Mode.DEBUG)
@@ -48,7 +48,7 @@ def test_log_mode_info_level():
     assert level_error_tag.get_text() == 'ERROR'
     assert level_error_tag['class'] == ['level', 'error']
 
-@patch('cvlog.log.show_image')
+@patch('cvlog.Logger.show_image')
 def test_debug_mode_info_level(show_image):
     remove_dirs('log/')
     log.set_mode(log.Mode.DEBUG)
@@ -74,7 +74,7 @@ def test_log_mode_trace_level():
     assert level_error_tag.get_text() == 'ERROR'
     assert level_error_tag['class'] == ['level', 'error']
 
-@patch('cvlog.log.show_image')
+@patch('cvlog.Logger.show_image')
 def test_debug_mode_trace_level(show_image):
     remove_dirs('log/')
     log.set_mode(log.Mode.DEBUG)
