@@ -50,7 +50,7 @@ def report(input_image_path, processing_method):
     for image_path in input_image_path:
         try:
             img = processing_method(image_path)
-            key_pressed = Logger.root.show_image(image_path, img)
+            key_pressed = Logger.root.error.show_image(image_path, img)
         except Exception as e:
             Reporter().error(image_path, e)
         else:

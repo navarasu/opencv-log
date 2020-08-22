@@ -26,7 +26,7 @@ def test_log_mode_default_level():
     assert level_tag.get_text() == 'ERROR'
     assert level_tag['class'] == ['level', 'error']
 
-@patch('cvlog.Logger.show_image')
+@patch('cvlog.logger.BaseLogger.show_image')
 def test_debug_mode_default_level(show_image):
     remove_dirs('log/')
     log.set_mode(log.Mode.DEBUG)
@@ -48,7 +48,7 @@ def test_log_mode_info_level():
     assert level_error_tag.get_text() == 'ERROR'
     assert level_error_tag['class'] == ['level', 'error']
 
-@patch('cvlog.Logger.show_image')
+@patch('cvlog.logger.BaseLogger.show_image')
 def test_debug_mode_info_level(show_image):
     remove_dirs('log/')
     log.set_mode(log.Mode.DEBUG)
@@ -74,7 +74,7 @@ def test_log_mode_trace_level():
     assert level_error_tag.get_text() == 'ERROR'
     assert level_error_tag['class'] == ['level', 'error']
 
-@patch('cvlog.Logger.show_image')
+@patch('cvlog.logger.BaseLogger.show_image')
 def test_debug_mode_trace_level(show_image):
     remove_dirs('log/')
     log.set_mode(log.Mode.DEBUG)
@@ -84,6 +84,6 @@ def test_debug_mode_trace_level(show_image):
     assert os.path.exists('log/cvlog.html') is False
 
 def log_all_level(img):
-    log.image(log.Level.TRACE, img)
-    log.image(log.Level.INFO, img)
-    log.image(log.Level.ERROR, img)
+    log.trace.image(img)
+    log.info.image(img)
+    log.error.image(img)
