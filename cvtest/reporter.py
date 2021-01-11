@@ -32,7 +32,7 @@ class Reporter:
     def __save_image(self, img):
         if not os.path.exists(self.image_path):
             os.makedirs(self.image_path)
-        output_path = os.path.join(self.image_path,  str(uuid4()) + '.png')
+        output_path = os.path.join(self.image_path, str(uuid4()) + '.png')
         cv2.imwrite(output_path, img)
         return output_path
 
