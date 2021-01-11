@@ -26,23 +26,23 @@ def test_log_path():
 def test_log_rotation():
     remove_dirs('log/')
     html_logger = hl.HtmlLogger()
-    html_logger.log_image('error', 'image', "dummy string", None)
-    html_logger.log_image('error', 'image', "dummy string", None)
+    html_logger.log_image('error', 'LoggerName', 'image', "dummy string", None)
+    html_logger.log_image('error', 'LoggerName', 'image', "dummy string", None)
     assert os.path.exists('check/cvlog.html') is True
     assert len(os.listdir('log/')) == 1
     html_logger = hl.HtmlLogger()
-    html_logger.log_image('error', 'image', "dummy string", None)
+    html_logger.log_image('error', 'LoggerName', 'image', "dummy string", None)
     time.sleep(1)
-    html_logger.log_image('error', 'image', "dummy string", None)
+    html_logger.log_image('error', 'LoggerName', 'image', "dummy string", None)
     assert os.path.exists('check/cvlog.html') is True
     assert len(os.listdir('log/')) == 2
     html_logger = hl.HtmlLogger()
-    html_logger.log_image('error', 'image', "dummy string", None)
-    html_logger.log_image('error', 'image', "dummy string", None)
+    html_logger.log_image('error', 'LoggerName', 'image', "dummy string", None)
+    html_logger.log_image('error', 'LoggerName', 'image', "dummy string", None)
     assert os.path.exists('check/cvlog.html') is True
     assert len(os.listdir('log/')) == 3
     html_logger = hl.HtmlLogger()
-    html_logger.log_image('error', 'image', "dummy string", None)
-    html_logger.log_image('error', 'image', "dummy string", None)
+    html_logger.log_image('error', 'LoggerName', 'image', "dummy string", None)
+    html_logger.log_image('error', 'LoggerName', 'image', "dummy string", None)
     assert os.path.exists('check/cvlog.html') is True
     assert len(os.listdir('log/')) == 4
