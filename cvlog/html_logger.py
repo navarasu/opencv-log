@@ -15,24 +15,27 @@ class HtmlLogger:
         self.__no_data = False
         self.__rotate_log()
 
-    def log_image(self, level, log_type, img_data, msg):
+    def log_image(self, level, logger_name, log_type, img_data, msg):
         data = ''.join(['<img src="data:image/png;base64, ', img_data, '"/>'])
-        self.__append_log_item(level, log_type, data, msg)
+        self.__append_log_item(level, logger_name, log_type, data, msg)
 
-    def __append_log_item(self, level, log_type, log_detail, msg):
+    def __append_log_item(self, level, logger_name, log_type, log_detail, msg):
         template = '<div class="log-item" id="'
         template += self.__unique_id() + '" onclick="show_data(this.id)"'
         short_stack, data = self.__get_log_info()
         data['level'] = level
         data['log_type'] = log_type
+        data['logger_name'] = logger_name
         data['msg'] = msg
         template += "data='" + json.dumps(data) + "' logdata = '" + log_detail + "'>"
-        template += '<div class="log-type">' + log_type + '</div>'
         template += '<h3 class="tvme">' + data['time_stamp']
         template += '<span class="level ' + level.lower() + '">' + data['level'] + '</span></h3>'
+        template += '<p class="line">' + re.sub(r'^/', '', short_stack) + '</p>'
+        template += '<div class="info-row"><div class="log-type">' + log_type + '</div>'
+        template += '<div class="logger-name">' + str(logger_name or '') + '</div></div>'
         if msg is not None:
             template += '<p class="description">' + msg + '</p>'
-        template += '<p class="line">' + re.sub(r'^/', '', short_stack) + '</p></div>'
+        template += '</div>'
         self.__try_append([template])
 
     def __append(self, html_text_seq):
@@ -67,7 +70,7 @@ class HtmlLogger:
         if not os.path.exists(dir_path):
             os.makedirs(dir_path)
         with open(self.__file_path(), 'w') as html:
-            html.writelines(['<html>', ht.STYLE, ht.SCRIPT, ht.CONTENT_START, ht.NO_DATA_CONTENT, ht.CONTENT_END])
+            html.writelines(['<html lang="en">', ht.STYLE, ht.SCRIPT, ht.CONTENT_START, ht.NO_DATA_CONTENT, ht.CONTENT_END])
         self.__no_data = True
 
     def __rotate_log(self):

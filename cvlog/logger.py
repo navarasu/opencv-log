@@ -8,15 +8,16 @@ from cvlog.config import Config, Mode, Level
 class Logger:
     root = None
 
-    def __init__(self):
-        self.error = BaseLogger(Level.ERROR)
-        self.info = BaseLogger(Level.INFO)
-        self.trace = BaseLogger(Level.TRACE)
+    def __init__(self, name=None):
+        self.error = BaseLogger(Level.ERROR, name)
+        self.info = BaseLogger(Level.INFO, name)
+        self.trace = BaseLogger(Level.TRACE, name)
 
 class BaseLogger:
     root = None
 
-    def __init__(self, level=None):
+    def __init__(self, level=None, name=None):
+        self.__name = name
         self.__level = level
         self.__html_logger = hl.HtmlLogger()
 
@@ -83,7 +84,7 @@ class BaseLogger:
         if not retval:
             return None
         msg = options.get('msg', None)
-        self.__html_logger.log_image(level, log_type, base64.b64encode(buffer).decode(), msg)
+        self.__html_logger.log_image(level, self.__name, log_type, base64.b64encode(buffer).decode(), msg)
 
     def show_image(self, title, log_type, img, options):
         cv2.namedWindow('window', cv2.WINDOW_NORMAL)
