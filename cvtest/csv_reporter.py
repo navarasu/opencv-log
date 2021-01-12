@@ -14,12 +14,12 @@ class CsvReporter:
             rmtree(dir_path)
         os.makedirs(dir_path)
         with open(self.__file_path, 'w') as f:
-            writer = csv.writer(f)
+            writer = csv.writer(f, lineterminator='\n')
             writer.writerow(self.__fields)
 
     def __append(self, values):
         with open(self.__file_path, 'a') as f:
-            writer = csv.writer(f)
+            writer = csv.writer(f, lineterminator='\n')
             writer.writerow(values)
 
     def log_report(self, result):
