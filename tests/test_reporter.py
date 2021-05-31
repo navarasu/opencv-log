@@ -33,7 +33,7 @@ def test_report_error():
     assert len(values) == 4
     assert values[-1][0] == 'error.png'
     assert values[-1][1] == 'ERROR'
-    assert values[-1][2] == ROOT_DIR + '/tests/test_reporter.py:40;'
+    assert values[-1][2] == os.path.join(ROOT_DIR, 'tests', 'test_reporter.py:40;')
 
 def process_image(image_path):
     if image_path == "error.png":
