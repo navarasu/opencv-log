@@ -1,5 +1,10 @@
 
-<h1><img height="80" src="https://navarasu.github.io/opencv-log/assets/opencv-log-bl.png" alt="opencv-log"></h1>
+<h1>
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="https://navarasu.github.io/opencv-log/assets/opencv-log-bl.png">
+  <img height="80" src="https://navarasu.github.io/opencv-log/assets/opencv-log-wh.png">
+</picture>
+</h1>
 
 [![Pypi
 Version](https://img.shields.io/pypi/v/opencv-log.svg)](https://pypi.org/project/opencv-log) [![Build
