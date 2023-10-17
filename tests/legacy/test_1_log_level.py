@@ -1,11 +1,12 @@
 import cvlog as log
 import cv2
-from .utils import remove_dirs, get_html
+from ..utils import remove_dirs, get_html
 import os
 from unittest.mock import patch
 
 def test_default_mode_default_level():
     remove_dirs('log/')
+    log.set_mode(log.Mode.NONE)
     log_all_level(cv2.imread("tests/data/orange.png"))
     assert os.path.exists('log/cvlog.html') is False
 
@@ -19,6 +20,7 @@ def test_no_data_section():
 def test_log_mode_default_level():
     remove_dirs('log/')
     log.set_mode(log.Mode.LOG)
+    log.set_level(log.Level.ERROR)
     log_all_level(cv2.imread("tests/data/orange.png"))
     logitem = get_html('log/cvlog.html').select('.log-list .log-item')
     assert len(logitem) == 1
@@ -84,6 +86,6 @@ def test_debug_mode_trace_level(show_image):
     assert os.path.exists('log/cvlog.html') is False
 
 def log_all_level(img):
-    log.trace.image(img)
-    log.info.image(img)
-    log.error.image(img)
+    log.image(log.Level.TRACE, img)
+    log.image(log.Level.INFO, img)
+    log.image(log.Level.ERROR, img)

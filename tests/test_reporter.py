@@ -7,7 +7,7 @@ import os
 
 report_path = 'log/report/report.csv'
 
-@patch('cvlog.log.show_image')
+@patch('cvlog.logger.BaseLogger.show_image')
 def test_report_pass(show_image):
     remove_dirs('log/report/')
     show_image.return_value = ord("y")
@@ -17,7 +17,7 @@ def test_report_pass(show_image):
     assert values[0] == ['Test Image', 'Result', 'Message']
     assert values[1] == ['tests/data/orange.png', 'PASS', '']
 
-@patch('cvlog.log.show_image')
+@patch('cvlog.logger.BaseLogger.show_image')
 def test_report_fail(show_image):
     show_image.return_value = ord("n")
     test.report(['tests/data/orange.png'], process_image)

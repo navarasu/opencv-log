@@ -1,13 +1,13 @@
 import cvlog as log
 import cv2
 import numpy as np
-from .utils import read_file, remove_dirs, get_html
+from ..utils import read_file, remove_dirs, get_html
 
 def test_log_image():
     remove_dirs('log/')
     img = cv2.imread("tests/data/orange.png")
     log.set_mode(log.Mode.LOG)
-    log.error.image(img)
+    log.image(log.Level.ERROR, img)
     logitem = get_html('log/cvlog.html').select('.log-list .log-item')
     assert logitem[0].select('.log-type')[0].text == 'image'
     assert logitem[0]['logdata'] == read_file('tests/data/expected/image.txt')
@@ -18,7 +18,7 @@ def test_log_edges():
     log.set_mode(log.Mode.LOG)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     edges = cv2.Canny(gray, 50, 150, apertureSize=3)
-    log.error.edges(edges)
+    log.edges(log.Level.ERROR, edges)
     logitem = get_html('log/cvlog.html').select('.log-list .log-item')
     assert logitem[0].select('.log-type')[0].text == 'edges'
     assert logitem[0]['logdata'] == read_file('tests/data/expected/edges.txt')
@@ -29,7 +29,7 @@ def test_log_threshold():
     log.set_mode(log.Mode.LOG)
     imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(imgray, 127, 255, 0)
-    log.error.threshold(thresh)
+    log.threshold(log.Level.ERROR, thresh)
     logitem = get_html('log/cvlog.html').select('.log-list .log-item')
     assert logitem[0].select('.log-type')[0].text == 'threshold'
     assert logitem[0]['logdata'] == read_file('tests/data/expected/thershold.txt')
@@ -42,7 +42,7 @@ def test_log_hough_lines():
     edges = cv2.Canny(gray, 50, 150, apertureSize=3)
     lines = cv2.HoughLines(edges, 1, np.pi / 180, 200)
 
-    log.error.hough_lines(lines, img)
+    log.hough_lines(log.Level.ERROR, lines, img)
     logitem = get_html('log/cvlog.html').select('.log-list .log-item')
     assert logitem[0].select('.log-type')[0].text == 'hough lines'
     assert logitem[0]['logdata'] == read_file('tests/data/expected/houghline_img.txt')
@@ -55,7 +55,7 @@ def test_log_hough_circles():
     blur = cv2.medianBlur(gray, 5)
     circles = cv2.HoughCircles(blur, cv2.HOUGH_GRADIENT, 1, 10, np.array([]), 100, 30, 1, 30)
 
-    log.error.hough_circles(circles, img)
+    log.hough_circles(log.Level.ERROR, circles, img)
     logitem = get_html('log/cvlog.html').select('.log-list .log-item')
     assert logitem[0].select('.log-type')[0].text == 'hough circles'
     assert logitem[0]['logdata'] == read_file('tests/data/expected/houghcircle_img.txt')
@@ -67,7 +67,7 @@ def test_contours():
     imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(imgray, 127, 255, 0)
     contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    log.error.contours(contours, img)
+    log.contours(log.Level.ERROR, contours, img)
     logitem = get_html('log/cvlog.html').select('.log-list .log-item')
     assert logitem[0].select('.log-type')[0].text == 'contours'
     assert logitem[0]['logdata'] == read_file('tests/data/expected/contour.txt')
@@ -79,7 +79,7 @@ def test_keypoints():
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     orb = cv2.ORB_create()
     kp, _ = orb.detectAndCompute(gray_img, None)
-    log.error.keypoints(kp, img, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+    log.keypoints(log.Level.ERROR, kp, img, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
     logitem = get_html('log/cvlog.html').select('.log-list .log-item')
     assert logitem[0].select('.log-type')[0].text == 'key points'
     print(logitem[0]['logdata'])
@@ -93,8 +93,8 @@ def test_message():
     ret, thresh = cv2.threshold(imgray, 127, 255, 0)
     contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     message = 'Lorem ipsum dolor sit amet, ne persius reprehendunt mei. Ea summo elitr munere his, et consul offendit recteque sea, quis elit nam ut.'
-    log.error.image(img)
-    log.error.contours(contours, img, msg=message)
+    log.image(log.Level.ERROR, img)
+    log.contours(log.Level.ERROR, contours, img, msg=message)
     logitem = get_html('log/cvlog.html').select('.log-list .log-item')
     assert logitem[0].select('.description') == []
     assert logitem[1].select('.description')[0].text == message
